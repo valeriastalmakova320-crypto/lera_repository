@@ -1,0 +1,75 @@
+﻿<!-- Окно программы. Без окна пользователю негде работать. -->
+<!-- x:Class - имя класса из C#. Чтобы окно знало, откуда брать код. -->
+<!-- xmlns - словарь языка XAML. Без него VS не поймёт теги. -->
+<!-- Title, Height, Width - надпись шапки и размеры. Чтобы окно было видно и имело имя. -->
+<Window x:Class="Задание4.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Учет финансов" Height="600" Width="950">
+    <!-- Сетка. Чтобы элементы стояли ровно: поля, таблица, баланс, кнопки. -->
+    <!-- Margin=10. Чтобы элементы не прилипали к краю окна. -->
+    <Grid Margin="10">
+        <!-- Список строк сетки. Говорим, сколько строк и какой высоты. -->
+        <Grid.RowDefinitions>
+            <!-- Строка 1. Для полей ввода новой записи. -->
+            <RowDefinition Height="Auto"/>
+            <!-- Строка 2. Для таблицы - растягивается. -->
+            <RowDefinition Height="*"/>
+            <!-- Строка 3. Для строки с балансом. -->
+            <RowDefinition Height="Auto"/>
+            <!-- Строка 4. Для кнопок. -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!-- Панель с полями ввода новой записи. Grid.Row="0" - первая строка. -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <!-- Надпись "Дата:". Подсказка для поля справа. -->
+            <TextBlock Text="Дата:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Поле ввода даты. Пользователь пишет дату вручную. -->
+            <TextBox x:Name="txtDate" Width="90" Margin="0,0,10,0"/>
+            <!-- Надпись "Тип:". Подсказка, что вводить: Доход или Расход. -->
+            <TextBlock Text="Тип:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Поле ввода типа. Пользователь пишет "Доход" или "Расход". -->
+            <TextBox x:Name="txtType" Width="80" Margin="0,0,10,0"/>
+            <!-- Надпись "Категория:". Подсказка для поля справа. -->
+            <TextBlock Text="Категория:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Поле ввода категории. Например, "Продукты", "Зарплата". -->
+            <TextBox x:Name="txtCategory" Width="120" Margin="0,0,10,0"/>
+            <!-- Надпись "Сумма:". Подсказка для поля справа. -->
+            <TextBlock Text="Сумма:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Поле ввода суммы. Только число. -->
+            <TextBox x:Name="txtAmount" Width="80" Margin="0,0,10,0"/>
+            <!-- Надпись "Комментарий:". Подсказка для поля справа. -->
+            <TextBlock Text="Комментарий:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Поле ввода комментария. Необязательное поле. -->
+            <TextBox x:Name="txtComment" Width="150"/>
+        </StackPanel>
+        <!-- Таблица записей. Grid.Row="1" - вторая строка. -->
+        <!-- AutoGenerateColumns. Колонки создадутся сами. -->
+        <!-- IsReadOnly. Нельзя менять прямо в таблице. -->
+        <!-- SelectionMode Single. Выбрать только одну строку. -->
+        <!-- SelectionChanged. При клике - заполнить поля ввода. -->
+        <DataGrid Grid.Row="1" x:Name="dgRecords"
+                  AutoGenerateColumns="True"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  SelectionChanged="dgRecords_SelectionChanged"/>
+        <!-- Строка с балансом. Grid.Row="2" - третья строка. -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
+            <!-- Надпись "Баланс:". Поясняет, что справа число. -->
+            <TextBlock Text="Баланс:" VerticalAlignment="Center" Margin="0,0,5,0" FontWeight="Bold"/>
+            <!-- Надпись с самим балансом. Меняется из кода, поэтому x:Name. -->
+            <TextBlock x:Name="txtBalance" Text="0" VerticalAlignment="Center" FontWeight="Bold"/>
+        </StackPanel>
+        <!-- Панель кнопок. Grid.Row="3" - четвёртая строка. -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0">
+            <!-- Кнопка "Добавить". Сохранить новую запись в базу. -->
+            <Button x:Name="btnAdd" Content="Добавить" Width="100" Margin="0,0,10,0" Click="btnAdd_Click"/>
+            <!-- Кнопка "Редактировать". Сохранить изменения выбранной записи. -->
+            <Button x:Name="btnUpdate" Content="Редактировать" Width="120" Margin="0,0,10,0" Click="btnUpdate_Click"/>
+            <!-- Кнопка "Удалить". Убрать выбранную запись из базы. -->
+            <Button x:Name="btnDelete" Content="Удалить" Width="100" Margin="0,0,10,0" Click="btnDelete_Click"/>
+            <!-- Кнопка "Перечитать". Обновить список и пересчитать баланс. -->
+            <Button x:Name="btnRefresh" Content="Перечитать" Width="110" Click="btnRefresh_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

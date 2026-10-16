@@ -1,0 +1,58 @@
+﻿<!-- Окно программы. Без окна пользователю негде работать. -->
+<!-- x:Class - имя класса из C#. Чтобы окно знало, откуда брать код. -->
+<!-- xmlns - словарь языка XAML. Без него VS не поймёт теги. -->
+<!-- Title, Height, Width - надпись шапки и размеры. Чтобы окно было видно и имело имя. -->
+<Window x:Class="задание_2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Учет задач" Height="500" Width="850">
+    <!-- Сетка. Чтобы элементы стояли ровно: поля сверху, таблица по центру, кнопки снизу. -->
+    <!-- Margin=10. Чтобы элементы не прилипали к краю окна. -->
+    <Grid Margin="10">
+        <!-- Список строк сетки. Говорим, сколько строк и какой высоты. -->
+        <Grid.RowDefinitions>
+            <!-- Строка 1, высота по содержимому. Для полей ввода. -->
+            <RowDefinition Height="Auto"/>
+            <!-- Строка 2, займёт всё оставшееся место. Для таблицы - она должна расти. -->
+            <RowDefinition Height="*"/>
+            <!-- Строка 3, по содержимому. Для кнопок. -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!-- Панель с полями ввода, слева направо, в первой строке. Здесь пользователь вводит данные. -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <!-- Надпись "Название:". Объясняет пользователю, что вводить в поле справа. -->
+            <TextBlock Text="Название:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Поле ввода названия задачи. Чтобы пользователь написал название. -->
+            <TextBox x:Name="txtTitle" Width="150" Margin="0,0,10,0"/>
+            <!-- Надпись "Описание:". Подсказка, что вводить в поле справа. -->
+            <TextBlock Text="Описание:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Поле ввода описания. Чтобы пользователь написал подробности задачи. -->
+            <TextBox x:Name="txtDescription" Width="200" Margin="0,0,10,0"/>
+            <!-- Надпись "Статус:". Подсказка для поля статуса. -->
+            <TextBlock Text="Статус:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Поле ввода статуса. Чтобы пользователь написал "Новая", "В работе" или "Готово". -->
+            <TextBox x:Name="txtStatus" Width="120"/>
+        </StackPanel>
+        <!-- Таблица. Показать пользователю все задачи из базы. -->
+        <!-- AutoGenerateColumns. Колонки создадутся сами по столбцам из базы. -->
+        <!-- IsReadOnly. Чтобы нельзя было случайно менять данные прямо в таблице. -->
+        <!-- SelectionMode Single. Чтобы выбрать можно было только одну задачу. -->
+        <!-- SelectionChanged. Когда кликнули по строке - заполним поля ввода. -->
+        <DataGrid Grid.Row="1" x:Name="dgTasks"
+                  AutoGenerateColumns="True"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  SelectionChanged="dgTasks_SelectionChanged"/>
+        <!-- Панель кнопок, в третьей строке. Чтобы у пользователя были действия. -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
+            <!-- Кнопка "Добавить". Сохранить введённую задачу в базу. -->
+            <Button x:Name="btnAdd" Content="Добавить" Width="100" Margin="0,0,10,0" Click="btnAdd_Click"/>
+            <!-- Кнопка "Обновить". Сохранить изменения выбранной задачи. -->
+            <Button x:Name="btnUpdate" Content="Обновить" Width="100" Margin="0,0,10,0" Click="btnUpdate_Click"/>
+            <!-- Кнопка "Удалить". Убрать выбранную задачу из базы. -->
+            <Button x:Name="btnDelete" Content="Удалить" Width="100" Margin="0,0,10,0" Click="btnDelete_Click"/>
+            <!-- Кнопка "Перечитать". Перечитать базу, если что-то поменялось извне. -->
+            <Button x:Name="btnRefresh" Content="Перечитать" Width="110" Click="btnRefresh_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

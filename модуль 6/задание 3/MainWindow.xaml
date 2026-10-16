@@ -1,0 +1,73 @@
+﻿<!-- Окно программы. Без окна пользователю негде работать. -->
+<!-- x:Class - имя класса из C#. Чтобы окно знало, откуда брать код. -->
+<!-- xmlns - словарь языка XAML. Без него VS не поймёт теги. -->
+<!-- Title, Height, Width - надпись шапки и размеры. Чтобы окно было видно и имело имя. -->
+<Window x:Class="Задание3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Библиотека" Height="600" Width="900">
+    <!-- Сетка. Чтобы элементы стояли ровно: поиск, поля, таблица, кнопки. -->
+    <!-- Margin=10. Чтобы элементы не прилипали к краю окна. -->
+    <Grid Margin="10">
+        <!-- Список строк сетки. Говорим, сколько строк и какой высоты. -->
+        <Grid.RowDefinitions>
+            <!-- Строка 1. Для строки поиска. -->
+            <RowDefinition Height="Auto"/>
+            <!-- Строка 2. Для полей добавления новой книги. -->
+            <RowDefinition Height="Auto"/>
+            <!-- Строка 3. Для таблицы - растягивается. -->
+            <RowDefinition Height="*"/>
+            <!-- Строка 4. Для кнопок. -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!-- Панель поиска. Grid.Row="0" - первая строка. Здесь пользователь вводит запрос. -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <!-- Надпись "Поиск:". Подсказка, что вводить в поле справа. -->
+            <TextBlock Text="Поиск (название или автор):" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Поле ввода для поиска. Чтобы пользователь написал запрос. -->
+            <TextBox x:Name="txtSearch" Width="250" Margin="0,0,10,0"/>
+            <!-- Кнопка "Найти". Запустить поиск по базе. -->
+            <Button x:Name="btnSearch" Content="Найти" Width="80" Margin="0,0,10,0" Click="btnSearch_Click"/>
+            <!-- Кнопка "Показать всё". Сбросить поиск и показать все книги. -->
+            <Button x:Name="btnShowAll" Content="Показать всё" Width="110" Click="btnShowAll_Click"/>
+        </StackPanel>
+        <!-- Панель с полями ввода новой книги. Grid.Row="1" - вторая строка. -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <!-- Надпись "Название:". Подсказка для поля справа. -->
+            <TextBlock Text="Название:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Поле ввода названия книги. -->
+            <TextBox x:Name="txtTitle" Width="150" Margin="0,0,10,0"/>
+            <!-- Надпись "Автор:". Подсказка для поля справа. -->
+            <TextBlock Text="Автор:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Поле ввода автора. -->
+            <TextBox x:Name="txtAuthor" Width="150" Margin="0,0,10,0"/>
+            <!-- Надпись "Год:". Подсказка для поля справа. -->
+            <TextBlock Text="Год:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <!-- Поле ввода года. -->
+            <TextBox x:Name="txtYear" Width="60" Margin="0,0,10,0"/>
+            <!-- Кнопка "Добавить книгу". Сохранить новую книгу в базу. -->
+            <Button x:Name="btnAdd" Content="Добавить книгу" Width="130" Click="btnAdd_Click"/>
+        </StackPanel>
+        <!-- Таблица. Показать книги из базы. Grid.Row="2" - третья строка. -->
+        <!-- AutoGenerateColumns. Колонки создадутся сами. -->
+        <!-- IsReadOnly. Нельзя менять прямо в таблице. -->
+        <!-- SelectionMode Single. Выбрать только одну строку. -->
+        <!-- SelectionChanged. При клике - заполнить поля ввода. -->
+        <DataGrid Grid.Row="2" x:Name="dgBooks"
+                  AutoGenerateColumns="True"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  SelectionChanged="dgBooks_SelectionChanged"/>
+        <!-- Панель кнопок. Grid.Row="3" - четвёртая строка. -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0">
+            <!-- Кнопка "Обновить запись". Сохранить изменения выбранной книги. -->
+            <Button x:Name="btnUpdate" Content="Обновить запись" Width="140" Margin="0,0,10,0" Click="btnUpdate_Click"/>
+            <!-- Кнопка "Арендовать". Поставить статус "В аренде". -->
+            <Button x:Name="btnRent" Content="Арендовать" Width="110" Margin="0,0,10,0" Click="btnRent_Click"/>
+            <!-- Кнопка "Вернуть". Поставить статус "В наличии". -->
+            <Button x:Name="btnReturn" Content="Вернуть" Width="100" Margin="0,0,10,0" Click="btnReturn_Click"/>
+            <!-- Кнопка "Удалить". Убрать выбранную книгу из базы. -->
+            <Button x:Name="btnDelete" Content="Удалить" Width="100" Click="btnDelete_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
